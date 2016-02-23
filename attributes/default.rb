@@ -1,0 +1,14 @@
+default['letsencrypt']['contact']     = []
+default['letsencrypt']['endpoint']    = 'https://acme-staging.api.letsencrypt.org'
+default['letsencrypt']['renew']       = 30
+default['rabbitmq']['use_distro_version']=true
+default['rabbitmq']['ssl'] = true
+default['rabbitmq']['ssl_port'] = 8883
+default['rabbitmq']['ssl_cacert'] = '/path/to/cacert.pem'
+default['rabbitmq']['ssl_cert'] = '/path/to/cert.pem'
+default['rabbitmq']['ssl_key'] = '/path/to/key.pem'
+default['rabbitmq']['ssl_verify'] = 'verify_none'
+default['rabbitmq']['ssl_fail_if_no_peer_cert'] = false
+default['rabbitmq']['default_user'] = 'controller'
+default['rabbitmq']['default_pass'] = '12qwaszx'
+default['rabbitmq']['loopback_users'] = []
