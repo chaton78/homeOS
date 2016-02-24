@@ -12,3 +12,4 @@ cookbook "grafana"
 cookbook "nginx"
 cookbook "rabbitmq"
 cookbook "letsencrypt", git:"https://github.com/schubergphilis/letsencrypt"
+cookbook 'firewall'
