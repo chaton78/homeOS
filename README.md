@@ -59,6 +59,7 @@ Tested on CentOS 7, but should work on other linux distro if you had the correct
   ```bash
   berks package
   ```
+  
   Upload cookbooks-*.tar.gz, web.json and solo.rb to your new VPS.
   
 ### On your VPS:
@@ -77,6 +78,7 @@ Install chef
   curl -L https://www.opscode.com/chef/install.sh | bash
   ```
 Untar-ungzip your cookbooks
+
 Run 
   ```bash
   chef-solo -c solo.rb -j web.json
