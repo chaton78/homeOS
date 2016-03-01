@@ -1,10 +1,20 @@
 # homeOS-cookbook
 
-TODO: Enter the cookbook description here.
+Setup:
+  fail2ban
+  selinux
+  firewall
+  influxdb
+  grafana
+  collectd
+  rabbitmq
+  nginx (https TBC)
+  letsencrypt (self-signed)
+  
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+Tested on CentOS 7, but should work on other linux distro if you had the correct deps.
 
 ## Attributes
 
@@ -16,10 +26,26 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['homeOS']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['name']</tt></td>
+    <td>String</td>
+    <td>Node name</td>
+    <td><tt></tt></td></tr><tr>
+    <td><tt>['inter_username']</tt></td>
+    <td>String</td>
+    <td>Username used between different components</td>
+    <td><tt></tt></td></tr><tr>
+    <td><tt>['inter_password']</tt></td>
+    <td>String</td>
+    <td>Password used between different components</td>
+    <td><tt></tt></td></tr><tr>
+    <td><tt>['ddns_token']</tt></td>
+    <td>String</td>
+    <td>Token used to update duckdns.org -- Sorry this is hardcoded for now</td>
+    <td><tt></tt></td></tr><tr>
+    <td><tt>['ddns']</tt></td>
+    <td>String</td>
+    <td>Domain for duckdns.org -- Sorry this is hardcoded for now</td>
+    <td><tt>duckdns.org</tt></td>
   </tr>
 </table>
 
@@ -39,4 +65,4 @@ Include `homeOS` in your node's `run_list`:
 
 ## License and Authors
 
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+Author:: Pascal Larin <plarin@gmail.com>
