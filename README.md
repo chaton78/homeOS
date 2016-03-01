@@ -51,14 +51,14 @@ Tested on CentOS 7, but should work on other linux distro if you had the correct
 
 ## Usage
 
-### homeOS::default
+
 
 Include `homeOS` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[homeOS::default]"
+    "run_list": [ "recipe[selinux_policy::install]","recipe[homeOS]","recipe[rabbitmq]","recipe[rabbitmq::plugin_management]" ]
   ]
 }
 ```
