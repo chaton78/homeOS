@@ -51,17 +51,23 @@ Tested on CentOS 7, but should work on other linux distro if you had the correct
 
 ## Usage
 
-
-
-Include `homeOS` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "run_list": [ "recipe[selinux_policy::install]","recipe[homeOS]","recipe[rabbitmq]","recipe[rabbitmq::plugin_management]" ]
-  ]
-}
-```
+### On your wokstation:
+  * Install Chef dk
+  * Clone this repo https://github.com/chaton78/homeOS.git
+  * Update solo.rb and web.json (for each node) to your liking
+  * Run this:
+  ```bash
+  berks package
+  ```
+  Upload cookbooks-*.tar.gz, web.json and solo.rb to your new VPS.
+  
+### On your VPS:
+Force some setting, (we are using cloud at cost)
+  ```bash
+  nmcli con mod "System eth0" ipv4.dns "8.8.8.8 8.8.4.4"
+  hostname YOUR_HOSTNAME
+  hostnamectl set-hostname YOUR_HOSTNAME --transient
+  ```
 
 ## License and Authors
 
