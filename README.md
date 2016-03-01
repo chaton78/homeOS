@@ -68,6 +68,19 @@ Force some setting, (we are using cloud at cost)
   hostname YOUR_HOSTNAME
   hostnamectl set-hostname YOUR_HOSTNAME --transient
   ```
+Update your image, take a coffee.. this is C@C.
+  ```bash
+  yum -y update
+  ```
+Install chef
+  ```bash
+  curl -L https://www.opscode.com/chef/install.sh | bash
+  ```
+Untar-ungzip your cookbooks
+Run 
+  ```bash
+  chef-solo -c solo.rb -j web.json
+  ```
 
 ## License and Authors
 
