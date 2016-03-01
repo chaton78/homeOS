@@ -1,0 +1,87 @@
+curl -L https://www.opscode.com/chef/install.sh | bash
+yum -y update
+yum -y install gem,ruby-devel
+yum -y groupinstall "Development Tools"
+gem update --system
+
+wget http://github.com/opscode/chef-repo/tarball/master
+tar -zxf master
+mv chef-chef-repo* chef-repo
+cd chef-repo/
+mkdir .chef
+echo "cookbook_path [ '/root/chef-repo/cookbooks' ]" > .chef/knife.rb
+#knife cookbook create homeOS
+cd cookbooks
+knife cookbook site download fail2ban
+tar zxf fail2ban-*
+rm -f fail2ban-*.tar.gz
+
+knife cookbook site download yum
+tar zxf yum-*.tar.gz
+rm  -f yum-*.tar.gz
+
+knife cookbook site download yum-epel
+tar zxf yum-epel-*
+rm  -f yum-epel-*.tar.gz
+
+cd ~/chef-repo
+#vim solo.rb
+file_cache_path "/root/chef-solo"
+cookbook_path "/root/chef-repo/cookbooks"
+#vim web.json
+{
+  "run_list": [  "recipe[homeOS]" ]
+}
+
+
+chef-solo -c solo.rb -j web.json
+
+#hardening
+gem install json
+gem install berkshelf
+gem install knife-solo
+
+cd ~/
+git clone https://github.com/TelekomLabs/example-chef-hardening.git
+cd example-chef-hardening/chef
+#vim solo.rb
+file_cache_path "/root/example-chef-hardening/chef"
+cookbook_path "/root/example-chef-hardening/chef/cookbooks"
+
+chef-solo -c solo.rb -j nodes/default.json
+
+
+
+
+~~~ new version on PC
+berks update
+rm -rf cookbooks
+berks vendor cookbooks
+
+~~~  on server
+#yum -y install policycoreutils-python
+nmcli con mod "System eth0" ipv4.dns "8.8.8.8 8.8.4.4"
+hostname cyul
+hostnamectl set-hostname cyul --transient
+
+hostname dorval
+hostnamectl set-hostname dorval --transient
+yum -y update
+
+mkdir /etc/keys
+openssl genrsa -out /etc/keys/ca.key 2048
+openssl genrsa -out /etc/keys/server.key 2048
+openssl req -new -x509 -key /etc/keys/ca.key -out /etc/keys/ca.crt
+
+openssl req -new -key /etc/keys/server.key -out /etc/keys/server.csr
+openssl x509 -req -in /etc/keys/server.csr -CA /etc/keys/ca.crt -CAkey /etc/keys/ca.key -CAcreateserial -out /etc/keys/server.crt
+
+[root@c213309494-cloudpro-450141936 keys]# openssl x509 -in ca.crt -out ca.pem -outform PEM
+[root@c213309494-cloudpro-450141936 keys]# openssl x509 -in server.crt -out server.crt.pem -outform PEM
+[root@c213309494-cloudpro-450141936 keys]# openssl x509 -in server.key -out server.key.pem -outform PEM
+unable to load certificate
+139700741801888:error:0906D06C:PEM routines:PEM_read_bio:no start line:pem_lib.c:703:Expecting: TRUSTED CERTIFICATE
+[root@c213309494-cloudpro-450141936 keys]# openssl rsa -in server.key -out server.key.pem -outform PEM
+
+cd homeOS/
+chef-solo -c solo.rb -j web.json
