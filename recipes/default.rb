@@ -57,7 +57,7 @@ end
 firewall 'default' do
   action    :save
 end
-letsencrypt_selfsigned node['name']+'.'+node['domain'] do
+letsencrypt_selfsigned node['name']+'.'+node['ddns_name'] do
   crt     '/etc/keys/'+node['name']+'.crt'
   key     '/etc/keys/'+node['name']+'.key'
 end
@@ -107,14 +107,18 @@ end
 
 
 
-grafana_organization 'homeOS' do
-  user 'pascal'
-  passwd '12qwaszx'
-  action :create_if_missing
-end
+
+#grafana_organization 'Main Org.' do
+#  organization(
+#    name: 'homeOS'
+#  )
+#  user 'pascal'
+#  password '12qwaszx'
+#  action :update
+#end
 
 http_request 'GET https://www.duckdns.org/update' do
   message ''
-  url 'https://www.duckdns.org/update?domains=' + node['name'] + '&token='+node['duckdns_token']+'&ip='
+  url 'https://www.duckdns.org/update?domains=' + node['name'] + '&token='+node['ddns_token']+'&ip='
   action :get
 end

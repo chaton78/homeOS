@@ -1,13 +1,14 @@
-default['domain'] = 'duckdns.org'
 default['hostname_cookbook']['use_node_ip']=true
-default['set_fqdn'] = '*.' +  node['domain']
+default['set_fqdn'] = '*.' +  node['ddns_name']
 
 default['letsencrypt']['contact']     = []
 default['letsencrypt']['endpoint']    = 'https://acme-staging.api.letsencrypt.org'
 default['letsencrypt']['renew']       = 30
 
-default['influxdb']['ssl_cert_file_path'] = '/etc/keys/cyulduck.crt'
-default['grafana']['version'] = 'latest'
+
+default['grafana']['version'] = '2.6.0'
+default['grafana']['package']['version'] = '2.6.0-1'
+default['grafana']['install_type'] = 'package'
 default['erlang']['install_method']   = 'esl'
 
 
@@ -95,7 +96,7 @@ default['influxdb']['config'] = {
   'admin' => {
     'enabled' => true,
     'bind-address' => ':8083',
-    'https-enabled' => true,
+    'https-enabled' => false,
     'https-certificate' => node['influxdb']['ssl_cert_file_path']
   },
   'http' => {
@@ -105,7 +106,7 @@ default['influxdb']['config'] = {
     'log-enabled' => true,
     'write-tracing' => false,
     'pprof-enabled' => false,
-    'https-enabled' => true,
+    'https-enabled' => false,
     'https-certificate' => node['influxdb']['ssl_cert_file_path']
   },
   'graphite' => [

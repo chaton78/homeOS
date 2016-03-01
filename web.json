@@ -1,4 +1,6 @@
 {
-  "duckdns_token" : "818caa4d-29f8-49f5-897b-8fda0468d014",
-  "run_list": [ "recipe[selinux_policy::install]" "recipe[homeOS]","recipe[rabbitmq]","recipe[rabbitmq::plugin_management]" ]
+  "name" :"cyul",
+  "ddns_token" : "818caa4d-29f8-49f5-897b-8fda0468d014",
+  "ddns_name" : "duckdng.org",
+  "run_list": [ "recipe[selinux_policy::install]","recipe[homeOS]","recipe[rabbitmq]","recipe[rabbitmq::plugin_management]" ]
 }
