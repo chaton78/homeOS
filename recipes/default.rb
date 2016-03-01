@@ -66,25 +66,25 @@ influxdb_database 'controller_db' do
   action :create
 end
 
-influxdb_user 'controller' do
-  password '12qwaszx'
+influxdb_user node['inter_username'] do
+  password node['inter_password']
   databases ['controller_db','collectd']
   action :create
 end
 
 influxdb_admin 'admin' do
-  password '12qwaszx'
+  password node['inter_password']
   action :create
 end
 
 grafana_datasource 'controller_db' do
   source(
-    type: 'influxdb_09',
+    type: 'influxdb',
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'controller_db',
-    user: 'controller',
-    password: '12qwaszx',
+    user: node['inter_username'],
+    password: node['inter_password'],
     isdefault: true
   )
 
@@ -94,28 +94,20 @@ end
 
   grafana_datasource 'collectd_db' do
   source(
-    type: 'influxdb_09',
+    type: 'influxdb',
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'collectd',
-    user: 'controller',
-    password: '12qwaszx',
+    user: node['inter_username'],
+    password: node['inter_password'],
     isdefault: true
   )
     action :create_if_missing
 end
 
 
+ 
 
-
-#grafana_organization 'Main Org.' do
-#  organization(
-#    name: 'homeOS'
-#  )
-#  user 'pascal'
-#  password '12qwaszx'
-#  action :update
-#end
 
 http_request 'GET https://www.duckdns.org/update' do
   message ''
