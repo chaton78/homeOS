@@ -79,6 +79,13 @@ Install chef
   ```
 Untar-ungzip your cookbooks
 
+Create or upload the following keys and cert:
+
+  ```
+  /etc/keys/ca.crt # You ca.crt used to sign your cert
+  /etc/keys/server.crt #Unique server cert (used by rabbitmq)
+  /etc/keys/server.key #Private key for your server
+  ```
 Run 
   ```bash
   chef-solo -c solo.rb -j web.json
